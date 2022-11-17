@@ -1,1 +1,126 @@
-<p>initialize-model works!</p>
+<div>
+  <form [formGroup]="form" #initialize_model="ngForm" class="container box">
+
+      <table class="table-all hoverable">
+        <tbody>
+          <tr class="indigo">
+              <th>Parámetros</th>
+              <th>Valores Iniciales</th>
+              <th>Estimar</th>
+              <th *ngIf="bounds">Valores mínimos</th>
+              <th *ngIf="bounds">Valores máximos</th>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr>
+              <td>&beta;</td>
+              <td><input type="number" pattern="[+-]?([0-9]*[.])?[0-9]+" formControlName="beta" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " (change)="updateParamsInitials(0,beta_value.value)"  #beta_value /></td>
+              <td><input type="checkbox" (change)="updateParamsEstInitials(0,beta_est.value)"  #beta_est /></td>
+              <td *ngIf="bounds"><input type="number" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " (change)="updateParamsMinInitials(0,beta_min.value)"  #beta_min /></td>
+              <td *ngIf="bounds"><input type="number" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " (change)="updateParamsMaxInitials(0,beta_max.value)"  #beta_max /></td>
+          </tr>
+          <tr *ngIf="model_name.model_name!='SI'">
+              <td>&gamma;</td>
+              <td><input type="number" pattern="[+-]?([0-9]*[.])?[0-9]+" formControlName="gamma" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " (change)="updateParamsInitials(1,gamma_value.value)"  #gamma_value /></td>
+              <td><input type="checkbox" (change)="updateParamsEstInitials(1,gamma_est.value)"  #gamma_est /></td>
+              <td *ngIf="bounds"><input type="number" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " (change)="updateParamsMinInitials(1,gamma_min.value)"  #gamma_min /></td>
+              <td *ngIf="bounds"><input type="number" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " (change)="updateParamsMaxInitials(1,gamma_max.value)"  #gamma_max /></td>
+          </tr>
+          <tr *ngIf="model_name.model_name=='SIRS'">
+              <td>&delta;</td>
+              <td><input type="number" pattern="[+-]?([0-9]*[.])?[0-9]+" formControlName="delta" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " (change)="updateParamsInitials(2,delta_value.value)"  #delta_value /></td>
+              <td><input type="checkbox" (change)="updateParamsEstInitials(2,delta_est.value)"  #delta_est/></td>
+              <td *ngIf="bounds"><input type="number" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " (change)="updateParamsMinInitials(2,delta_min.value)"  #delta_min /></td>
+              <td *ngIf="bounds"><input type="number" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " (change)="updateParamsMaxInitials(2,delta_max.value)"  #delta_max /></td>
+          </tr>
+          <tr *ngIf="model_name.model_name=='SEIR'">
+              <td>e</td>
+              <td><input type="number" pattern="[+-]?([0-9]*[.])?[0-9]+" formControlName="e" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " (change)="updateParamsInitials(3,e_value.value)"  #e_value /></td>
+              <td><input type="checkbox" (change)="updateParamsEstInitials(3,e_est.value)"  #e_est/></td>
+              <td *ngIf="bounds"><input type="number" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " (change)="updateParamsMinInitials(3,e_min.value)"  #e_min /></td>
+              <td *ngIf="bounds"><input type="number" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " (change)="updateParamsMaxInitials(3,e_max.value)"  #e_max /></td>
+          </tr>
+          <tr>
+              <td>&lambda;</td>
+              <td><input type="number" pattern="[+-]?([0-9]*[.])?[0-9]+" formControlName="lambda" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " (change)="updateParamsInitials(4,lambda_value.value)"  #lambda_value /></td>
+              <td><input type="checkbox" (change)="updateParamsEstInitials(4,lambda_est.value)"  #lambda_est /></td>
+              <td *ngIf="bounds"><input type="number" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " (change)="updateParamsMinInitials(4,lambda_min.value)"  #lambda_min /></td>
+              <td *ngIf="bounds"><input type="number" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " (change)="updateParamsMaxInitials(4,lambda_max.value)"  #lambda_max /></td>
+          </tr>
+          <tr>
+              <td>&mu;</td>
+              <td><input type="number" pattern="[+-]?([0-9]*[.])?[0-9]+" formControlName="mu" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " (change)="updateParamsInitials(5,mu_value.value)"  #mu_value /></td>
+              <td><input type="checkbox" (change)="updateParamsEstInitials(5,mu_est.value)"  #mu_est/></td>
+              <td *ngIf="bounds"><input type="number" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " (change)="updateParamsMinInitials(5,mu_min.value)"  #mu_min /></td>
+              <td *ngIf="bounds"><input type="number" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " (change)="updateParamsMaxInitials(5,mu_max.value)"  #mu_max /></td>
+          </tr>
+          <tr>
+              <td>m</td>
+              <td><input type="number" pattern="[+-]?([0-9]*[.])?[0-9]+" formControlName="m" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " (change)="updateParamsInitials(6,m_value.value)"  #m_value /></td>
+              <td><input type="checkbox" (change)="updateParamsEstInitials(6,m_est.value)"  #m_est/></td>
+              <td *ngIf="bounds"><input type="number" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " (change)="updateParamsMinInitials(6,m_min.value)"  #m_min /></td>
+              <td *ngIf="bounds"><input type="number" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " (change)="updateParamsMaxInitials(6,m_max.value)"  #m_max /></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3><b>Defina valores iniciales para las variables</b></h3>
+      <li>
+        <p class="left">
+          <label><b>S</b></label>
+          <input type="number" pattern="[+-]?([0-9]*[.])?[0-9]+" formControlName="S" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " (change)="updateVarsInitials(0,s_value.value)"  #s_value />
+        </p>
+        <p>
+          <label><b>I</b></label>
+          <input type="number" pattern="[+-]?([0-9]*[.])?[0-9]+" formControlName="I" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " (change)="updateVarsInitials(1,i_value.value)"  #i_value />
+        </p>
+        <p *ngIf="model_name.model_name!='SI'">
+          <label><b>R</b></label>
+          <input type="number" pattern="[+-]?([0-9]*[.])?[0-9]+" formControlName="R" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " (change)="updateVarsInitials(2,r_value.value)"  #r_value />
+        </p>
+        <p *ngIf="model_name.model_name=='SEIR'">
+          <label><b>E</b></label>
+          <input type="number" pattern="[+-]?([0-9]*[.])?[0-9]+" formControlName="E" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " (change)="updateVarsInitials(3,ee_value.value)"  #ee_value />
+        </p>
+      </li>
+
+      <h3><b>Seleccione un método numérico</b></h3>
+      <mat-form-field class="form_element">
+          <mat-select  formControlName="method">
+              <mat-option *ngFor="let m of methods" [value]="m.name" >{{m.name}}</mat-option>
+          </mat-select>
+      </mat-form-field>
+      <li>
+        <p>
+          <label><b>Valor para t</b></label>
+          <br>
+          <input type="number" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " formControlName="t" />
+        </p>
+        <p>
+          <label><b>Total de puntos</b></label>
+          <br>
+          <input type="number" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " formControlName="total_points" />
+        </p>
+        <p>
+          <label><b>Valor de N (adimensionalizar)</b></label>
+          <br>
+          <input type="number"  onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " formControlName="N"/>
+        </p>
+      </li>
+  </form>
+</div>
+
+<div class="container-button" *ngIf="!estimation" >
+<button mat-raised-button type="submit" [disabled]="!initialize_model.form.valid"  (click)="onSubmit()">
+  <div class="pattern">
+    <div class="target inner"></div>
+  </div>
+  <div class="text">Resolver Numéricamente</div>
+</button>
+<button mat-raised-button (click)="updateEstimation()">
+  <div class="pattern">
+    <div class="target inner"></div>
+  </div>
+  <div class="text">Estimar parámetros</div>
+</button>
+</div>

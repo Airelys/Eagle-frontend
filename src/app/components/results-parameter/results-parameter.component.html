@@ -1,1 +1,71 @@
-<p>results-parameter works!</p>
+<div id="htmlData">
+  <div class="container box">
+    <h3><b>Gráfico:</b></h3>
+    <p class="center"><img [src]="styleService.urlImage(results.img)" width="400" height="400" /><br></p>
+  </div>
+
+  <div class="container box">
+    <h3><b>Parámetros óptimos:</b></h3>
+    <div *ngIf="numeric_solve.model_name=='SI'">
+      <p *ngIf="numeric_solve.params_est[0]"><b>&beta; : </b> {{results.opt[0]}}</p>
+      <p *ngIf="numeric_solve.params_est[1]"><b>&lambda; : </b> {{results.opt[1]}}</p>
+      <p *ngIf="numeric_solve.params_est[2]"><b>&mu; : </b> {{results.opt[2]}}</p>
+      <p *ngIf="numeric_solve.params_est[3]"><b>m : </b> {{results.opt[3]}}</p>
+    </div>
+    <div *ngIf="numeric_solve.model_name=='SIR'">
+      <p *ngIf="numeric_solve.params_est[0]"><b>&beta; : </b> {{results.opt[0]}}</p>
+      <p *ngIf="numeric_solve.params_est[1]"><b>&gamma; : </b> {{results.opt[1]}}</p>
+      <p *ngIf="numeric_solve.params_est[2]"><b>&lambda; : </b> {{results.opt[2]}}</p>
+      <p *ngIf="numeric_solve.params_est[3]"><b>&mu; : </b> {{results.opt[3]}}</p>
+      <p *ngIf="numeric_solve.params_est[4]"><b>m : </b> {{results.opt[4]}}</p>
+    </div>
+    <div *ngIf="numeric_solve.model_name=='SIRS'">
+      <p *ngIf="numeric_solve.params_est[0]"><b>&beta; : </b> {{results.opt[0]}}</p>
+      <p *ngIf="numeric_solve.params_est[1]"><b>&gamma; : </b> {{results.opt[1]}}</p>
+      <p *ngIf="numeric_solve.params_est[2]"><b>&delta; : </b> {{results.opt[2]}}</p>
+      <p *ngIf="numeric_solve.params_est[3]"><b>&lambda; : </b> {{results.opt[3]}}</p>
+      <p *ngIf="numeric_solve.params_est[4]"><b>&mu; : </b> {{results.opt[4]}}</p>
+      <p *ngIf="numeric_solve.params_est[5]"><b>m : </b> {{results.opt[5]}}</p>
+    </div>
+    <div *ngIf="numeric_solve.model_name=='SEIR'">
+      <p *ngIf="numeric_solve.params_est[0]"><b>&beta; : </b> {{results.opt[0]}}</p>
+      <p *ngIf="numeric_solve.params_est[1]"><b>&gamma; : </b> {{results.opt[1]}}</p>
+      <p *ngIf="numeric_solve.params_est[2]"><b>e : </b> {{results.opt[2]}}</p>
+      <p *ngIf="numeric_solve.params_est[3]"><b>&lambda;; : </b> {{results.opt[3]}}</p>
+      <p *ngIf="numeric_solve.params_est[4]"><b>&mu; : </b> {{results.opt[4]}}</p>
+      <p *ngIf="numeric_solve.params_est[5]"><b>m : </b> {{results.opt[5]}}</p>
+    </div>
+  </div>
+
+  <div class="container box">
+
+    <h3><b>Resultados en distintos momentos t:</b></h3>
+
+    <table class="table-all hoverable">
+      <tbody>
+        <tr class="indigo">
+          <th>S</th>
+          <th>I</th>
+          <th *ngIf="model_name.model_name!='SI'">R</th>
+          <th *ngIf="model_name.model_name=='SEIR'">E</th>
+        </tr>
+      </tbody>
+      <tbody >
+        <tr *ngFor="let item of results.sol">
+          <td>{{item[0]}}</td>
+          <td>{{item[1]}}</td>
+          <td *ngIf="model_name.model_name!='SI'">{{item[2]}}</td>
+          <td *ngIf="model_name.model_name=='SEIR'">{{item[3]}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<button mat-flat-button (click)="downloadPDF()">
+  <div class="pattern">
+    <div class="target inner"></div>
+  </div>
+  <div class="text">Descargar resultados  <mat-icon>download</mat-icon></div>
+</button>
+

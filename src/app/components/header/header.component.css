@@ -1,0 +1,14 @@
+a{
+  color: white;
+}
+a:hover{
+  color: cornflowerblue;
+}
+
+.spacer{
+  margin-left: 20px;
+}
+
+.spacer2 {
+  flex: 1 1 auto;
+}

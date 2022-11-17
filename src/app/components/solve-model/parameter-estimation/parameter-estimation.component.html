@@ -1,1 +1,89 @@
-<p>parameter-estimation works!</p>
+<div class="container-div">
+  <form [formGroup]="form" #solve_model="ngForm" enctype="multipart/form-data" class="container box">
+    <li>
+      <p>
+        <label><b>Seleccione una metaheurística</b></label>
+        <br>
+        <mat-form-field class="form_element">
+            <mat-select  (selectionChange)="updateMetaheuristic(met.value)" #met formControlName="met">
+                <mat-option *ngFor="let m of metaheuristics" [value]="m.name" >{{m.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+      </p>
+      <p>
+        <label><b>Seleccione un método clásico</b></label>
+        <br>
+        <mat-form-field class="form_element">
+            <mat-select  (selectionChange)="updateClassicalMethod(c_method.value)" #c_method formControlName="clas">
+                <mat-option *ngFor="let m of classical_methods" [value]="m.name" >{{m.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+      </p>
+    </li>
+
+
+    <div *ngIf="metaheuristic!='None'">
+      <label><b>Cantidad de iteraciones</b></label>
+      <input type="number" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " formControlName="iter"/>
+    </div>
+
+    <div *ngIf="pso">
+      <li>
+        <p>
+          <label><b>Cantidad de partículas</b></label>
+          <br>
+          <input type="number" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " formControlName="particle" />
+        </p>
+        <p>
+          <label><b>Parámetro cognitivo</b></label>
+          <br>
+          <input type="number" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " formControlName="cognitive" />
+        </p>
+        <p>
+          <label><b>Parámetro social</b></label>
+          <br>
+          <input type="number" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " formControlName="social" />
+        </p>
+        <p>
+          <label><b>Parámetro de inercia</b></label>
+          <br>
+          <input type="number" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " formControlName="inercia" />
+        </p>
+      </li>
+    </div>
+
+    <div *ngIf="de">
+      <li>
+        <p>
+          <label><b>Población</b></label>
+          <input type="number" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " formControlName="population" />
+        </p>
+        <p>
+          <label><b>Factor de cruzamiento</b></label>
+          <input type="number" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " formControlName="crossing" />
+        </p>
+        <p>
+          <label><b>Factor de escalado</b></label>
+          <input type="number" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " formControlName="scaled" />
+        </p>
+      </li>
+    </div>
+
+    <li>
+      <p>
+        <label><b>Seleccione archivo de datos</b></label>
+        <input type="file" accept=".xlsx" (change)="onChange($event)"  formControlName="file"/>
+      </p>
+    </li>
+
+  </form>
+</div>
+
+<div class="container_button">
+  <button mat-raised-button type="submit" [disabled]="!solve_model.form.valid" (click)="onSubmit()">
+    <div class="pattern">
+      <div class="target inner"></div>
+    </div>
+    <div class="text">Estimar los parámetros</div>
+  </button>
+</div>
