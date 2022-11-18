@@ -8,6 +8,7 @@ import { ParameterEstimation } from 'src/app/models/parameter_estimation';
 import { ResultsParameterEstimation } from 'src/app/models/results_parameter_estimation';
 import { SolveModelService } from 'src/app/services/solve-model.service';
 import { UploadService } from 'src/app/services/upload.service';
+import { ToastrService } from 'ngx-toastr'
 
 @Component({
   selector: 'app-parameter-estimation',
@@ -20,28 +21,28 @@ export class ParameterEstimationComponent implements OnInit {
   subscription: Subscription = new Subscription();
   numeric_solve: NumericSolveModels = new NumericSolveModels();
   min_max: MinMax = new MinMax();
-  classical_methods = [{name:'None'},{name:'CG'},{name:'Newton-CG'},{name:'BFGS'},{name:'L-BFGS-B'}];
+  classical_methods = [{name:'None'},{name:'CG'},{name:'BFGS'},{name:'L-BFGS-B'}];
   metaheuristics = [{name:'None'},{name:'PSO'},{name:'DE'}];
   classical_method = 'None';
   metaheuristic = 'None';
   bounds = false;
   pso = false;
   de = false;
-  valid = false;
+  valid!:boolean;
   shortLink: string = "";
   loading: boolean = false;
   file!: File;
 
   constructor(private router: Router, private fb: FormBuilder, private modelService:SolveModelService,
-              private uploadService:UploadService) {
+              private uploadService:UploadService, private toastr: ToastrService) {
     this.form = this.fb.group({
-      met:['',Validators.required],
-      clas:['',Validators.required],
+      met:['None',Validators.required],
+      clas:['None',Validators.required],
       file: ['',Validators.required],
-      iter: ['5',Validators.required],
-      particle: ['5',Validators.required], cognitive: ['0.5',Validators.required],
+      iter: ['5',Validators.min(1)&&Validators.required],
+      particle: ['5',Validators.min(1)&&Validators.required], cognitive: ['0.5',Validators.required],
       social: ['0.3',Validators.required], inercia: ['0.9',Validators.required],
-      population: ['100',Validators.required], crossing: ['0.8',Validators.required],
+      population: ['100',Validators.min(1)&&Validators.required], crossing: ['0.8',Validators.required],
       scaled: ['0.6',Validators.required]
     })
   }
@@ -50,12 +51,16 @@ export class ParameterEstimationComponent implements OnInit {
     this.subscription=this.modelService.obtNumericSolveModel().subscribe(data => {
       this.numeric_solve = data
       console.log(this.numeric_solve.params)
-    })
+    });
 
     this.subscription=this.modelService.obtMinMax().subscribe(data => {
       this.min_max = data
       console.log(this.min_max)
-    })
+    });
+
+    this.subscription=this.modelService.obtValid().subscribe(data => {
+      this.valid = data
+    });
   }
 
   ngOnDestroy(){
@@ -135,28 +140,34 @@ export class ParameterEstimationComponent implements OnInit {
   }
 
   onSubmit():void{
-    this.loading = !this.loading;
-    console.log(this.file);
-    this.uploadService.upload(this.file).subscribe(
-        (event: any) => {
-            if (typeof (event) === 'object') {
+    this.modelService.updateGetValid(true);
 
-                this.shortLink = event.link;
+    if(!this.valid || (this.form.get('met')?.value==this.form.get('clas')?.value)){
+      this.toastr.error('Datos invalidos','Revise el formulario');
+    }
+    else{
+      this.loading = !this.loading;
+      console.log(this.file);
+      this.uploadService.upload(this.file).subscribe(
+          (event: any) => {
+              if (typeof (event) === 'object') {
 
-                this.loading = false;
-            }
-        });
+                  this.shortLink = event.link;
 
-    this.modelService.updateAll(true);
-    const parameter_est: ParameterEstimation = this.saveParameterEstimation();
-    var results:ResultsParameterEstimation = new ResultsParameterEstimation();
-    this.modelService.parammeterEstimation(parameter_est).subscribe(data => {
-      results = JSON.parse(String(data));
-      this.modelService.updateResultsParameter(results);
+                  this.loading = false;
+              }
+          });
 
-      this.router.navigate(['/results_parameter']);
-    });
+      this.modelService.updateAll(true);
+      const parameter_est: ParameterEstimation = this.saveParameterEstimation();
+      var results:ResultsParameterEstimation = new ResultsParameterEstimation();
+      this.modelService.parammeterEstimation(parameter_est).subscribe(data => {
+        results = JSON.parse(String(data));
+        this.modelService.updateResultsParameter(results);
 
+        this.router.navigate(['/results_parameter']);
+      });
+    }
   }
 
   onChange(event:any){

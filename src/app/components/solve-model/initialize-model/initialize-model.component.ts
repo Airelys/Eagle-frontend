@@ -4,10 +4,9 @@ import { SolveModelService } from 'src/app/services/solve-model.service';
 import { Subscription} from 'rxjs'
 import { ModelName } from 'src/app/models/model_name';
 import { NumericSolveModels } from 'src/app/models/numeric_solve_model';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MinMax } from 'src/app/models/min_max';
 import { ResultsNumericSolve } from 'src/app/models/results_numeric_solve';
-import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-initialize-model',
@@ -27,7 +26,8 @@ export class InitializeModelComponent implements OnInit, OnDestroy {
   methods = [{name:'RK45'},{name:'RK23'},{name:'DOP853'},{name:'Radau'},{name:'BDF'},{name:'LSODA'}];
   estimation = false;
   bounds = false;
-  update =false;
+  update = false;
+  validation = false;
 
   constructor( private router: Router, private modelService:SolveModelService,
               private fb: FormBuilder) {
@@ -36,11 +36,19 @@ export class InitializeModelComponent implements OnInit, OnDestroy {
       delta:[Number,Validators.required], e:[Number,Validators.required],
       lambda:[Number,Validators.required], mu:[Number,Validators.required],
       m:[Number,Validators.required],
-      method: ['',Validators.required],
-      S:[Number,Validators.required],I:[Number,Validators.required],
-      R:[Number,Validators.required],E:[Number,Validators.required],
-      t:['10',Validators.required],
-      total_points:['20',Validators.required],
+      beta_min:['0',Validators.required], gamma_min:['0',Validators.required],
+      delta_min:['0',Validators.required], e_min:['0',Validators.required],
+      lambda_min:['0',Validators.required], mu_min:['0',Validators.required],
+      m_min:['0',Validators.required],
+      beta_max:['1',Validators.required], gamma_max:['1',Validators.required],
+      delta_max:['1',Validators.required], e_max:['1',Validators.required],
+      lambda_max:['1',Validators.required], mu_max:['1',Validators.required],
+      m_max:['1',Validators.required],
+      method: ['RK45',Validators.required],
+      S:[Number,Validators.min(0)&&Validators.required],I:[Number,Validators.min(0)&&Validators.required],
+      R:[Number,Validators.min(0)&&Validators.required],E:[Number,Validators.min(0)&&Validators.required],
+      t:['10',Validators.min(1)&&Validators.required],
+      total_points:['20',Validators.min(1)&&Validators.required],
       N:['1',Validators.min(1)&&Validators.required]
     })
   }
@@ -61,6 +69,13 @@ export class InitializeModelComponent implements OnInit, OnDestroy {
       console.log(this.update)
       if(this.update){
         this.save()
+      }
+    })
+    this.subscription=this.modelService.obtGetValid().subscribe(data => {
+      this.validation = data
+      console.log('validation' + this.validation)
+      if(this.validation){
+        this.isValid()
       }
     })
   }
@@ -166,6 +181,14 @@ export class InitializeModelComponent implements OnInit, OnDestroy {
     min_max.params_min = this.params_min;
     min_max.params_max = this.params_max;
     this.modelService.updateMinMax(min_max);
+  }
+
+  isValid(){
+    const is = (element:boolean)=>element;
+    var valid = this.form.valid && this.params_est.some(is);
+    console.log('Valid');
+    console.log(valid);
+    this.modelService.updateValid(valid);
   }
 }
 

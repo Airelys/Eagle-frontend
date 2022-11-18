@@ -21,6 +21,8 @@ export class SolveModelService {
   private update = new BehaviorSubject<boolean>(false);
   private results_numeric = new BehaviorSubject<ResultsNumericSolve>({} as any);
   private results_parameter = new BehaviorSubject<ResultsParameterEstimation>({} as any);
+  private get_valid = new BehaviorSubject<boolean>(false);
+  private valid = new BehaviorSubject<boolean>(false);
 
   apiUrl = 'http://127.0.0.1:8000/';
   numeric_solve_url = '/api/SolveEpidemiologicalModels';
@@ -98,5 +100,21 @@ export class SolveModelService {
 
   obtResultsParameter():Observable<ResultsParameterEstimation>{
     return this.results_parameter.asObservable();
+  }
+
+  updateGetValid(get_valid:boolean){
+    this.get_valid.next(get_valid);
+  }
+
+  obtGetValid():Observable<boolean>{
+    return this.get_valid.asObservable();
+  }
+
+  updateValid(valid:boolean){
+    this.valid.next(valid);
+  }
+
+  obtValid():Observable<boolean>{
+    return this.valid.asObservable();
   }
 }

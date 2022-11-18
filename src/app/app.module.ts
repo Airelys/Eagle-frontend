@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -12,7 +14,6 @@ import { ParameterEstimationComponent } from './components/solve-model/parameter
 import { ResultsNumericSolveComponent } from './components/results-numeric-solve/results-numeric-solve.component';
 import { ResultsParameterComponent } from './components/results-parameter/results-parameter.component';
 import { ModelComponent } from './components/model/model.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -38,15 +39,16 @@ import { CommonModule } from '@angular/common';
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    ToastrModule.forRoot(),
     MatToolbarModule,
     MatFormFieldModule,
     MatSelectModule,
     MatOptionModule,
     MatButtonModule,
     MatIconModule,
-    CommonModule,
     HttpClientModule,
     ReactiveFormsModule
   ],
