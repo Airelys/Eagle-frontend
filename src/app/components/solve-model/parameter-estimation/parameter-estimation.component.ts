@@ -8,7 +8,8 @@ import { ParameterEstimation } from 'src/app/models/parameter_estimation';
 import { ResultsParameterEstimation } from 'src/app/models/results_parameter_estimation';
 import { SolveModelService } from 'src/app/services/solve-model.service';
 import { UploadService } from 'src/app/services/upload.service';
-import { ToastrService } from 'ngx-toastr'
+import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-parameter-estimation',
@@ -34,7 +35,8 @@ export class ParameterEstimationComponent implements OnInit {
   file!: File;
 
   constructor(private router: Router, private fb: FormBuilder, private modelService:SolveModelService,
-              private uploadService:UploadService, private toastr: ToastrService) {
+              private uploadService:UploadService, private toastr: ToastrService,
+              private spinner: NgxSpinnerService) {
     this.form = this.fb.group({
       met:['None',Validators.required],
       clas:['None',Validators.required],
@@ -98,7 +100,6 @@ export class ParameterEstimationComponent implements OnInit {
     parameter_estimation.params = this.numeric_solve.params;
     parameter_estimation.params_est = this.numeric_solve.params_est;
     parameter_estimation.t = this.numeric_solve.t;
-    parameter_estimation.total_points = this.numeric_solve.total_points;
     parameter_estimation.method = this.numeric_solve.method;
     parameter_estimation.N = this.numeric_solve.N;
     parameter_estimation.params_min = this.min_max.params_min;
@@ -140,12 +141,15 @@ export class ParameterEstimationComponent implements OnInit {
   }
 
   onSubmit():void{
+    this.spinner.show();
     this.modelService.updateGetValid(true);
 
     if(!this.valid || (this.form.get('met')?.value==this.form.get('clas')?.value)){
-      this.toastr.error('Datos invalidos','Revise el formulario');
+      this.toastr.error('Datos inválidos','Revise el formulario');
+      this.spinner.hide();
     }
     else{
+
       this.loading = !this.loading;
       console.log(this.file);
       this.uploadService.upload(this.file).subscribe(
@@ -162,9 +166,9 @@ export class ParameterEstimationComponent implements OnInit {
       const parameter_est: ParameterEstimation = this.saveParameterEstimation();
       var results:ResultsParameterEstimation = new ResultsParameterEstimation();
       this.modelService.parammeterEstimation(parameter_est).subscribe(data => {
+        this.spinner.hide();
         results = JSON.parse(String(data));
         this.modelService.updateResultsParameter(results);
-
         this.router.navigate(['/results_parameter']);
       });
     }

@@ -24,7 +24,7 @@
 
     <div *ngIf="metaheuristic!='None'">
       <label><b>Cantidad de iteraciones</b></label>
-      <input type="number" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " formControlName="iter"/>
+      <input type="number" min="1" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " formControlName="iter"/>
     </div>
 
     <div *ngIf="pso">
@@ -32,7 +32,7 @@
         <p>
           <label><b>Cantidad de partículas</b></label>
           <br>
-          <input type="number" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " formControlName="particle" />
+          <input type="number" min="1" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " formControlName="particle" />
         </p>
         <p>
           <label><b>Parámetro cognitivo</b></label>
@@ -56,7 +56,7 @@
       <li>
         <p>
           <label><b>Población</b></label>
-          <input type="number" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " formControlName="population" />
+          <input type="number" min="1" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " formControlName="population" />
         </p>
         <p>
           <label><b>Factor de cruzamiento</b></label>
@@ -79,7 +79,7 @@
   </form>
 </div>
 
-<div class="container_button">
+<div class="container-button">
   <button mat-raised-button type="submit" [disabled]="!solve_model.form.valid" (click)="onSubmit()">
     <div class="pattern">
       <div class="target inner"></div>
@@ -88,5 +88,6 @@
   </button>
 </div>
 
-
-
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "square-jelly-box" [fullScreen] = "true">
+  <img src="../../../../assets/img/spinn.gif">
+</ngx-spinner>

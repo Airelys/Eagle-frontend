@@ -5,6 +5,7 @@ import { PresentationComponent } from './components/presentation/presentation.co
 import { ResultsNumericSolveComponent } from './components/results-numeric-solve/results-numeric-solve.component';
 import { ResultsParameterComponent } from './components/results-parameter/results-parameter.component';
 import { SolveModelComponent } from './components/solve-model/solve-model.component';
+import { UserManualComponent } from './components/user-manual/user-manual.component';
 
 const routes: Routes = [
   {path:'', redirectTo:'routeTitlePage', pathMatch: 'full'},
@@ -13,6 +14,7 @@ const routes: Routes = [
   {path:'solve_model', component: SolveModelComponent},
   {path:'results_numeric', component: ResultsNumericSolveComponent},
   {path:'results_parameter', component: ResultsParameterComponent},
+  {path:'user_manual', component: UserManualComponent},
   {path:'**', redirectTo:'/routeTitlePage', pathMatch: 'full'}
 ];
 

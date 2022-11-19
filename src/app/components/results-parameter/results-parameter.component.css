@@ -9,7 +9,7 @@
   margin-right: 50px;
 }
 
-.container-button{
+.container_button{
   margin-top: 20px;
   text-align: center !important;
   margin-bottom: 100px;
@@ -21,6 +21,7 @@
 	width: 100%;
 	display: table;
   margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .table-all {

@@ -4,7 +4,6 @@ export class NumericSolveModels{
   params: Array<object> =[];
   params_est: Array<boolean> =[];
   t: number = 0;
-  total_points: number = 0;
   method: string=''
   N: number = 1
 }

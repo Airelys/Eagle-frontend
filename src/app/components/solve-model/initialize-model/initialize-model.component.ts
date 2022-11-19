@@ -7,6 +7,8 @@ import { NumericSolveModels } from 'src/app/models/numeric_solve_model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MinMax } from 'src/app/models/min_max';
 import { ResultsNumericSolve } from 'src/app/models/results_numeric_solve';
+import { NgxSpinnerService } from "ngx-spinner";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-initialize-model',
@@ -30,7 +32,8 @@ export class InitializeModelComponent implements OnInit, OnDestroy {
   validation = false;
 
   constructor( private router: Router, private modelService:SolveModelService,
-              private fb: FormBuilder) {
+              private fb: FormBuilder, private spinner: NgxSpinnerService,
+              private toastr: ToastrService) {
     this.form = this.fb.group({
       beta:[Number,Validators.required], gamma:[Number,Validators.required],
       delta:[Number,Validators.required], e:[Number,Validators.required],
@@ -48,7 +51,6 @@ export class InitializeModelComponent implements OnInit, OnDestroy {
       S:[Number,Validators.min(0)&&Validators.required],I:[Number,Validators.min(0)&&Validators.required],
       R:[Number,Validators.min(0)&&Validators.required],E:[Number,Validators.min(0)&&Validators.required],
       t:['10',Validators.min(1)&&Validators.required],
-      total_points:['20',Validators.min(1)&&Validators.required],
       N:['1',Validators.min(1)&&Validators.required]
     })
   }
@@ -148,25 +150,31 @@ export class InitializeModelComponent implements OnInit, OnDestroy {
     numeric_solve_models.params = this.params_initials;
     numeric_solve_models.params_est = this.params_est;
     numeric_solve_models.t = this.form.get('t')?.value;
-    numeric_solve_models.total_points = this.form.get('total_points')?.value;
     numeric_solve_models.method = this.form.get('method')?.value;
     numeric_solve_models.N = this.form.get('N')?.value;
     return numeric_solve_models
   }
 
   onSubmit(): void{
-    const numeric_solve_models: NumericSolveModels = this.saveNumericSolveModel();
-    numeric_solve_models.params_est = [false,false,false,false,false,false,false];
-    var results:ResultsNumericSolve = new ResultsNumericSolve();
-    this.modelService.numericSolve(numeric_solve_models).subscribe(data => {
-      console.log(data)
-      results = JSON.parse(String(data));
-      console.log(results)
-      this.modelService.updateResultsNumeric(results);
 
-      this.router.navigate(['/results_numeric']);
-    });
-
+    if(!(this.model_name.model_name==='SI'||this.model_name.model_name==='SIR'||
+      this.model_name.model_name==='SIRS'||this.model_name.model_name==='SEIR')){
+      this.toastr.error('No ha seleccionado modelo','Regrese a la página anterior');
+    }
+    else{
+      this.spinner.show();
+      const numeric_solve_models: NumericSolveModels = this.saveNumericSolveModel();
+      numeric_solve_models.params_est = [false,false,false,false,false,false,false];
+      var results:ResultsNumericSolve = new ResultsNumericSolve();
+      this.modelService.numericSolve(numeric_solve_models).subscribe(data => {
+        this.spinner.hide();
+        console.log(data)
+        results = JSON.parse(String(data));
+        console.log(results)
+        this.modelService.updateResultsNumeric(results);
+        this.router.navigate(['/results_numeric']);
+        });
+    }
   }
 
   updateEstimation():void{
@@ -185,7 +193,9 @@ export class InitializeModelComponent implements OnInit, OnDestroy {
 
   isValid(){
     const is = (element:boolean)=>element;
-    var valid = this.form.valid && this.params_est.some(is);
+    const m = (this.model_name.model_name==='SI'||this.model_name.model_name==='SIR'||
+              this.model_name.model_name==='SIRS'||this.model_name.model_name==='SEIR')
+    var valid = this.form.valid && this.params_est.some(is) && m;
     console.log('Valid');
     console.log(valid);
     this.modelService.updateValid(valid);

@@ -94,17 +94,12 @@
         <p>
           <label><b>Valor para t</b></label>
           <br>
-          <input type="number" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " formControlName="t" />
-        </p>
-        <p>
-          <label><b>Total de puntos</b></label>
-          <br>
-          <input type="number" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " formControlName="total_points" />
+          <input type="number" pattern="[+]?([0-9]*[.])?[0-9]+" min="1" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " formControlName="t" />
         </p>
         <p>
           <label><b>Valor de N (adimensionalizar)</b></label>
           <br>
-          <input type="number"  onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " formControlName="N"/>
+          <input type="number" pattern="[+]?([0-9]*[.])?[0-9]+" min="1"  onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " formControlName="N"/>
         </p>
       </li>
   </form>
@@ -117,6 +112,11 @@
   </div>
   <div class="text">Resolver Numéricamente</div>
 </button>
+
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "square-jelly-box" [fullScreen] = "true">
+  <img src="../../../../assets/img/spinn.gif">
+</ngx-spinner>
+
 <button mat-raised-button (click)="updateEstimation()">
   <div class="pattern">
     <div class="target inner"></div>
@@ -124,3 +124,5 @@
   <div class="text">Estimar parámetros</div>
 </button>
 </div>
+
+
