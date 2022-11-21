@@ -1,14 +1,111 @@
-<div>
+<div class="container box">
   <h2>¿Qué es Eagle?</h2>
-  <p>Eagle es una aplicacion que busca resolver el problema de estimacion de parametros en
-    modelos epidemiologicos, graficando tambien la solucion; y que ademas, da la posibilidad de resolver
-    numericamente dicho modelo.
+  <p>Eagle es una aplicación que busca resolver el problema de estimación de parámetros en
+    modelos epidemiológicos, graficando la solución; y que además, da la posibilidad de resolver
+    numéricamente dicho modelo.
   </p>
-  <h2>¿Qué modelos epidemiologicos pueden ser usados?</h2>
-  <p>El software trabaja con prototipos de modelos epidemiologicos, entre ellos se pueden encontrar:
+  <h2>¿Qué modelos epidemiológicos pueden ser usados?</h2>
+  <p>El software trabaja con prototipos de modelos epidemiológicos, entre ellos se pueden encontrar:
     SI, SIR, SIRS y SEIR. A continuacion se muestra donde se escoge el prototipo.
   </p>
-  <img  src="../../../assets/img/model.jpg" width="600" height="300" alt="model"><br>
-  <img  src="../../../assets/img/model_select.jpg" width="600" height="300" alt="model">
-
+  <img  src="../../../assets/img/model.jpg" width="600" height="300" alt="model">
+  <img  src="../../../assets/img/model_select.jpg" width="600" height="300" alt="model"><br>
+  <h2>¿Cómo se resuelve numéricamente un modelo?</h2>
+  <p>Para resolver numéricamente un modelo, previamente seleccionado  su prototipo, se debe introducir
+    los parámetros y variables iniciales correspondientes a dicho modelo, se escoge un método numérico
+    para resolver el modelo (por defecto se encuentra RK45), se escoge un valor para t (por defecto es
+    10), se escoge un valor de N (por defecto es 1) y por último, se da clic en "Resolver numéricamente".
+    <br>
+    <img  src="../../../assets/img/solve_model_numeric.jpg" width="600" height="300" alt="model">
+    <img  src="../../../assets/img/solve_model_numeric2.jpg" width="600" height="300" alt="model"><br>
+    Luego, se muestran los respectivos resultados, con la graficación de los mismos, dando, además, la
+    posibilidad de descargarlos en .pdf. <br>
+    <img  src="../../../assets/img/results_numeric.jpg" width="600" height="300" alt="model">
+    <img  src="../../../assets/img/results_numeric2.jpg" width="600" height="300" alt="model"><br>
+    Para descargar el .pdf se debe dar clic en el botón "Descargar".<br>
+    <img  src="../../../assets/img/results_numeric3.jpg" width="600" height="300" alt="model"><br>
+    Nota: Si no tiene conocimiento de quien es t o N más adelante se explican en la sección "Explicación
+    de algunos conceptos". <br>
+  </p>
+  <h2>¿Cómo se estiman parámetros en un modelo?</h2>
+  <p>Para estimar parámetros en un modelo, previamente seleccionado  su prototipo, se debe introducir
+    los parámetros y variables iniciales correspondientes a dicho modelo, se seleccionan los parámetros
+    a estimar, se escoge un método numérico para resolver el modelo (por defecto se encuentra RK45), se
+    escoge un valor para t (por defecto es 10), se escoge un valor de N (por defecto es 1) y por último,
+    se da clic en "Estimar parámetros". <br>
+    <img  src="../../../assets/img/est1.jpg" width="600" height="300" alt="model">
+    <img  src="../../../assets/img/solve_model_numeric2.jpg" width="600" height="300" alt="model"><br>
+    Después aparece otro formulario a llenar, donde se debe seleccionar un método clásico, una
+    metaheurística o ambos, se tiene que cargar un archivo de datos en formato .xlsx (debe contener
+    los valores reales conocidos de las variables del modelo) y por último, se da clic en el botón
+    "Estimar los parámetros". <br>
+    <img  src="../../../assets/img/est.jpg" width="600" height="300" alt="model"><br>
+    Luego, se muestran los respectivos resultados, con la graficación de los mismos y los parámetros
+    óptimos estimados, dando, además, la posibilidad de descargarlos en .pdf. <br>
+    <img  src="../../../assets/img/result_est.jpg" width="600" height="300" alt="model">
+    <img  src="../../../assets/img/result_est2.jpg" width="600" height="300" alt="model"><br>
+    Nota: Al seleccionar alguna de las metaheurísticas, aparecen valores máximos y mínimos para cada
+    parámetro, que por defecto son 0 y 1 respectivamente, además, aparecen nuevos datos a llenar en
+    dependencia de la metaheurística escogida, en la sección "Explicación de algunos conceptos" se
+    explicará el uso de los mismos. <br>
+  </p>
+  <h2>¿Cuáles métodos numéricos se pueden usar?</h2>
+  <p><b>-RK45:</b> método explícito de Runge-Kutta de orden 5(4),el error se controla asumiendo la precisión del
+    método de cuarto orden, pero se toman medidas utilizando la fórmula precisa de quinto orden. <br>
+    <b>-RK23:</b> método explícito de Runge-Kutta de orden 3(2). El error se controla asumiendo la precisión
+     del método de segundo orden, pero se toman medidas utilizando la fórmula precisa de tercer
+     orden. <br>
+     <b>-DOP853:</b> método explícito de Runge-Kutta de orden 8. <br>
+     <b>-Radau:</b> método implícito de Runge-Kutta de la familia de orden Radau IIA 5. El error se controla con
+     una fórmula incrustada precisa de tercer orden. <br>
+     <b>-BDF:</b> método implícito de orden variable de varios pasos (1 a 5) basado en una fórmula de
+     diferenciación hacia atrás para la aproximación derivada. <br>
+     <b>-LSODA:</b> método Adams/BDF con detección y cambio automáticos de rigidez. <br>
+  </p>
+  <h2>¿Cuáles metaheurísticas se pueden usar?</h2>
+  <p><b>-PSO:</b> optimización por enjambres de partículas. <br>
+     <b>-DE:</b> evolución diferencial. <br>
+  </p>
+  <h2>¿Cuáles métodos clásicos se pueden usar?</h2>
+  <p><b>-CG:</b> gradiente conjugado. <br>
+     <b>-BFGS:</b> método Cuasi Newton. <br>
+     <b>-L-BFGS-S:</b> método Cuasi Newton. <br>
+  </p>
+  <h2>¿El archivo de datos .xlsx debe seguir algún formato?</h2>
+  <p>Sí, debe tener cuatro filas: Suceptibles, Infectados, Recuperados y Latentes, respectivamente.<br>
+    <img  src="../../../assets/img/xlsx.jpg" width="600" height="300" alt="model"><br>
+  </p>
+  <h2>Explicación de algunos conceptos</h2>
+  <p><b>-Valor para t:</b> indica el valor máximo de tiempo hasta el cual llega la solución numérica del modelo.
+    <br>
+    <b>-Valor de N:</b> para estudiar el comportamiento de las poblaciones en mucha literatura se realiza un
+     proceso de adimensionalización, donde se hace un cambio de variable S(t)/N y I(t)/N, en lugar de S(t)
+     y I(t), donde N es el tamaño de la población.
+    <br>
+    <b>-Cantidad de iteraciones:</b> indica la cantidad de iteraciones con las cuales va a trabajar
+     la metaheurística seleccionada.
+     <br>
+     <b>-Cantidad de partículas:</b> es un parámetros de la metaheurística PSO, que indica la cantidad de
+     partículas con las cuales trabajará el enjambre.
+     <br>
+     <b>-Parámetro cognitivo:</b> es un parámetros de la metaheurística PSO, controla la influencia que tiene
+     la mejor solución que ha encontrado la partícula k en su recorrido, sobre el cálculo de la
+     velocidad en la iteración t + 1.
+     <br>
+     <b>-Parámetro de inercia:</b> es un parámetros de la metaheurística PSO, regula la influencia que posee
+     la velocidad vk, de la iteración t,en el cálculo de la velocidad en la iteración t + 1.
+     <br>
+     <b>-Parámetro social:</b> es un parámetros de la metaheurística PSO, representa el peso que tiene la mejor
+     solución encontrada por el enjambre, sobre el cálculo de vk en t+1.
+     <br>
+     <b>-Población:</b> es un parámetros de la metaheurística DE, establece el tamaño total de la población.
+     <br>
+     <b>-Factor de cruzamiento:</b> es un parámetros de la metaheurística DE, es el factor de escala de la
+     mutación, que afecta la velocidad con la cual evoluciona la población, debe estar en el rango [0,2].
+     <br>
+     <b>-Factor de escalado:</b> es un parámetros de la metaheurística DE, es la constante de recombinación
+     debe estar en el rango [0, 1], también se conoce como probabilidad de cruce. El aumento de este
+     valor permite que una mayor cantidad de mutantes progresen a la siguiente generación, pero a
+     riesgo de la estabilidad de la población.
+  </p>
 </div>

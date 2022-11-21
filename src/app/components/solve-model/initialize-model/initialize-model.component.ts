@@ -87,19 +87,20 @@ export class InitializeModelComponent implements OnInit, OnDestroy {
   }
 
   updateParamsInitials(position:number,value:string):void{
-    this.params_initials.splice(position,1,Number(value))
+    this.params_initials.splice(position,1,Number(value));
   }
 
   updateVarsInitials(position:number,value:string):void{
-    this.vars_initials.splice(position,1,Number(value))
+    this.vars_initials.splice(position,1,Number(value));
   }
 
-  updateParamsEstInitials(position:number,value:string):void{
-    this.params_est.splice(position,1,Boolean(value))
+  updateParamsEstInitials(position:number):void{
+    this.params_est.splice(position,1,!this.params_est[position]);
+    console.log(this.params_est)
   }
 
   updateParamsMinInitials(position:number,value:string):void{
-    this.params_min.splice(position,1,Number(value))
+    this.params_min.splice(position,1,Number(value));
   }
 
   updateParamsMaxInitials(position:number,value:string):void{

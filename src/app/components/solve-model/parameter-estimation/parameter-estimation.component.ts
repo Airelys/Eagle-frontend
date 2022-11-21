@@ -147,6 +147,7 @@ export class ParameterEstimationComponent implements OnInit {
     if(!this.valid || (this.form.get('met')?.value==this.form.get('clas')?.value)){
       this.toastr.error('Datos inválidos','Revise el formulario');
       this.spinner.hide();
+      this.modelService.updateGetValid(false);
     }
     else{
 

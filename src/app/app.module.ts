@@ -14,6 +14,7 @@ import {MatIconModule} from '@angular/material/icon'
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -56,6 +57,7 @@ import { UserManualComponent } from './components/user-manual/user-manual.compon
     HttpClientModule,
     ReactiveFormsModule,
     MatPaginatorModule,
+    MatCheckboxModule,
     NgxSpinnerModule
   ],
   providers: [],

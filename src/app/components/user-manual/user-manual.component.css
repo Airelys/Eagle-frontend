@@ -1,0 +1,22 @@
+.box{
+  box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2), 0 4px 20px 0 rgba(0,0,0,0.19);
+}
+.container {
+  padding: 0.01em 16px;
+  margin-bottom: 100px;
+  margin-top: 50px;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+
+div{
+  margin-top: 20px 20px 20px 20px;
+}
+
+h2{
+  color: blue;
+}
+
+img{
+  margin-left: 10px;
+}

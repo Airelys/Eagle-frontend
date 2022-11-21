@@ -18,8 +18,6 @@ export class PresentationComponent implements OnInit {
     this.modelService.updateBounds(false);
     this.modelService.updateMinMax({} as any);
     this.modelService.updateAll(false);
-    this.modelService.updateResultsNumeric({} as any);
-    this.modelService.updateResultsParameter({} as any);
     this.modelService.updateGetValid(false);
     this.modelService.updateValid(false);
 

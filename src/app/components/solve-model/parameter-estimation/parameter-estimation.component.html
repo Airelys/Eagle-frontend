@@ -60,11 +60,11 @@
         </p>
         <p>
           <label><b>Factor de cruzamiento</b></label>
-          <input type="number" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " formControlName="crossing" />
+          <input type="number" min="0" max="2" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " formControlName="crossing" />
         </p>
         <p>
           <label><b>Factor de escalado</b></label>
-          <input type="number" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " formControlName="scaled" />
+          <input type="number" min="0" max="1" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " formControlName="scaled" />
         </p>
       </li>
     </div>
@@ -89,5 +89,5 @@
 </div>
 
 <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "square-jelly-box" [fullScreen] = "true">
-  <img src="../../../../assets/img/spinn.gif">
+  <img src="../../../../assets/img/spinn.gif" width="200" height="200">
 </ngx-spinner>
