@@ -22,7 +22,7 @@ export class ParameterEstimationComponent implements OnInit {
   subscription: Subscription = new Subscription();
   numeric_solve: NumericSolveModels = new NumericSolveModels();
   min_max: MinMax = new MinMax();
-  classical_methods = [{name:'None'},{name:'CG'},{name:'BFGS'},{name:'L-BFGS-B'}];
+  classical_methods = [{name:'None'},{name:'TNC'},{name:'Powell'},{name:'L-BFGS-B'},{name:'SLSQP'}];
   metaheuristics = [{name:'None'},{name:'PSO'},{name:'DE'}];
   classical_method = 'None';
   metaheuristic = 'None';
@@ -44,8 +44,8 @@ export class ParameterEstimationComponent implements OnInit {
       iter: ['5',Validators.min(1)&&Validators.required],
       particle: ['5',Validators.min(1)&&Validators.required], cognitive: ['0.5',Validators.required],
       social: ['0.3',Validators.required], inercia: ['0.9',Validators.required],
-      population: ['100',Validators.min(1)&&Validators.required], crossing: ['0.8',Validators.required],
-      scaled: ['0.6',Validators.required]
+      population: ['5',Validators.min(1)&&Validators.required], crossing: ['0.5',Validators.required],
+      scaled: ['0.3',Validators.required]
     })
   }
 
@@ -71,6 +71,12 @@ export class ParameterEstimationComponent implements OnInit {
 
   updateClassicalMethod(value:string){
     this.classical_method = value;
+    if (this.classical_method!='None'){
+      this.modelService.updateBounds(true);
+    }
+    else{
+      this.modelService.updateBounds(false);
+    }
   }
 
   updateMetaheuristic(value:string){
