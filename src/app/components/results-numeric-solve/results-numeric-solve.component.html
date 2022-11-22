@@ -1,7 +1,11 @@
 <div id="htmlData">
   <div class="container box">
     <h3><b>Gráfico:</b></h3>
-    <p class="center"><img [src]="styleService.urlImage(results.img)" width="400" height="400" /><br></p>
+    <p class="center"><img [src]="styleService.urlImage(results.img[0])" width="400" height="400" /><br></p>
+    <p class="center"><img [src]="styleService.urlImage(results.img[1])" width="400" height="400" /><br></p>
+    <p class="center"><img [src]="styleService.urlImage(results.img[2])" width="400" height="400" /><br></p>
+    <p *ngIf="model_name.model_name != 'SI'" class="center"><img [src]="styleService.urlImage(results.img[3])" width="400" height="400" /><br></p>
+    <p *ngIf="model_name.model_name =='SEIR'" class="center"><img [src]="styleService.urlImage(results.img[4])" width="400" height="400" /><br></p>
   </div>
 
 

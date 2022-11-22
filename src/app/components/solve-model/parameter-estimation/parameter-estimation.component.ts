@@ -101,7 +101,8 @@ export class ParameterEstimationComponent implements OnInit {
     parameter_estimation.params_est = this.numeric_solve.params_est;
     parameter_estimation.t = this.numeric_solve.t;
     parameter_estimation.method = this.numeric_solve.method;
-    parameter_estimation.N = this.numeric_solve.N;
+    parameter_estimation.P = this.numeric_solve.P;
+    parameter_estimation.di = this.numeric_solve.di;
     parameter_estimation.params_min = this.min_max.params_min;
     parameter_estimation.params_max = this.min_max.params_max;
     parameter_estimation.classical_method = this.classical_method;

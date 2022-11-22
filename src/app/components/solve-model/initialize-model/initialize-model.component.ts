@@ -20,7 +20,7 @@ export class InitializeModelComponent implements OnInit, OnDestroy {
   form:FormGroup;
   subscription: Subscription = new Subscription();
   model_name: ModelName = new ModelName();
-  vars_initials = [{},{},{},{}];
+  vars_initials = [{},{},{}];
   params_initials = [{},{},{},{},{},{},{}];
   params_est = [false,false,false,false,false,false,false];
   params_max = [1,1,1,1,1,1,1];
@@ -30,6 +30,7 @@ export class InitializeModelComponent implements OnInit, OnDestroy {
   bounds = false;
   update = false;
   validation = false;
+  dimen =false;
 
   constructor( private router: Router, private modelService:SolveModelService,
               private fb: FormBuilder, private spinner: NgxSpinnerService,
@@ -48,10 +49,10 @@ export class InitializeModelComponent implements OnInit, OnDestroy {
       lambda_max:['1',Validators.required], mu_max:['1',Validators.required],
       m_max:['1',Validators.required],
       method: ['RK45',Validators.required],
-      S:[Number,Validators.min(0)&&Validators.required],I:[Number,Validators.min(0)&&Validators.required],
+      I:[Number,Validators.min(0)&&Validators.required],
       R:[Number,Validators.min(0)&&Validators.required],E:[Number,Validators.min(0)&&Validators.required],
       t:['10',Validators.min(1)&&Validators.required],
-      N:['1',Validators.min(1)&&Validators.required]
+      P:['',Validators.min(1)&&Validators.required]
     })
   }
 
@@ -115,28 +116,28 @@ export class InitializeModelComponent implements OnInit, OnDestroy {
         this.params_est= [this.params_est[0],this.params_est[4],this.params_est[5],this.params_est[6]];
         this.params_min= [this.params_min[0],this.params_min[4],this.params_min[5],this.params_min[6]];
         this.params_max= [this.params_max[0],this.params_max[4],this.params_max[5],this.params_max[6]];
-        this.vars_initials = [this.vars_initials[0],this.vars_initials[1]];
+        this.vars_initials = [this.vars_initials[0]];
         break;
       case 'SIR':
         this.params_initials= [this.params_initials[0],this.params_initials[1],this.params_initials[4],this.params_initials[5],this.params_initials[6]];
         this.params_est= [this.params_est[0],this.params_est[1],this.params_est[4],this.params_est[5],this.params_est[6]];
         this.params_min= [this.params_min[0],this.params_min[1],this.params_min[4],this.params_min[5],this.params_min[6]];
         this.params_max= [this.params_max[0],this.params_max[1],this.params_max[4],this.params_max[5],this.params_max[6]];
-        this.vars_initials = [this.vars_initials[0],this.vars_initials[1],this.vars_initials[2]];
+        this.vars_initials = [this.vars_initials[0],this.vars_initials[1]];
         break;
       case 'SIRS':
         this.params_initials= [this.params_initials[0],this.params_initials[1],this.params_initials[2],this.params_initials[4],this.params_initials[5],this.params_initials[6]]
         this.params_est= [this.params_est[0],this.params_est[1],this.params_est[2],this.params_est[4],this.params_est[5],this.params_est[6]]
         this.params_min= [this.params_min[0],this.params_min[1],this.params_min[2],this.params_min[4],this.params_min[5],this.params_min[6]]
         this.params_max= [this.params_max[0],this.params_max[1],this.params_max[2],this.params_max[4],this.params_max[5],this.params_max[6]]
-        this.vars_initials = [this.vars_initials[0],this.vars_initials[1],this.vars_initials[2]];
+        this.vars_initials = [this.vars_initials[0],this.vars_initials[1]];
         break;
       case 'SEIR':
         this.params_initials= [this.params_initials[0],this.params_initials[3],this.params_initials[1],this.params_initials[4],this.params_initials[5],this.params_initials[6]];
         this.params_est= [this.params_est[0],this.params_est[3],this.params_est[1],this.params_est[4],this.params_est[5],this.params_est[6]];
         this.params_min= [this.params_min[0],this.params_min[3],this.params_min[1],this.params_min[4],this.params_min[5],this.params_min[6]];
         this.params_max= [this.params_max[0],this.params_max[3],this.params_max[1],this.params_max[4],this.params_max[5],this.params_max[6]];
-        this.vars_initials = [this.vars_initials[0],this.vars_initials[1],this.vars_initials[2],this.vars_initials[3]];
+        this.vars_initials = [this.vars_initials[0],this.vars_initials[1],this.vars_initials[2]];
         break;
       default:
         break
@@ -152,7 +153,8 @@ export class InitializeModelComponent implements OnInit, OnDestroy {
     numeric_solve_models.params_est = this.params_est;
     numeric_solve_models.t = this.form.get('t')?.value;
     numeric_solve_models.method = this.form.get('method')?.value;
-    numeric_solve_models.N = this.form.get('N')?.value;
+    numeric_solve_models.P = this.form.get('P')?.value;
+    numeric_solve_models.di = this.dimen;
     return numeric_solve_models
   }
 

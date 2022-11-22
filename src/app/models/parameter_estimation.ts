@@ -5,7 +5,7 @@ export class ParameterEstimation{
   params_est: Array<boolean> =[];
   t: number = 0;
   method: string='';
-  N: number = 1;
+  P: number = 1;
   params_min: Array<number> =[];
   params_max: Array<number> =[];
   classical_method: string='None';
@@ -18,4 +18,5 @@ export class ParameterEstimation{
   population: number = 100;
   crossing: number = 0.8;
   scaled: number = 0.6;
+  di:boolean =false;
 }

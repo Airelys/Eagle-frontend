@@ -66,21 +66,17 @@
 
       <h3><b>Defina valores iniciales para las variables</b></h3>
       <li>
-        <p class="left">
-          <label><b>S</b></label>
-          <input type="number" pattern="[+-]?([0-9]*[.])?[0-9]+" formControlName="S" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " (change)="updateVarsInitials(0,s_value.value)"  #s_value />
-        </p>
         <p>
           <label><b>I</b></label>
-          <input type="number" pattern="[+-]?([0-9]*[.])?[0-9]+" formControlName="I" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " (change)="updateVarsInitials(1,i_value.value)"  #i_value />
+          <input type="number" min="0" pattern="[+-]?([0-9]*[.])?[0-9]+" formControlName="I" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " (change)="updateVarsInitials(0,i_value.value)"  #i_value />
         </p>
         <p *ngIf="model_name.model_name!='SI'">
           <label><b>R</b></label>
-          <input type="number" pattern="[+-]?([0-9]*[.])?[0-9]+" formControlName="R" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " (change)="updateVarsInitials(2,r_value.value)"  #r_value />
+          <input type="number" min="0" pattern="[+-]?([0-9]*[.])?[0-9]+" formControlName="R" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " (change)="updateVarsInitials(1,r_value.value)"  #r_value />
         </p>
         <p *ngIf="model_name.model_name=='SEIR'">
           <label><b>E</b></label>
-          <input type="number" pattern="[+-]?([0-9]*[.])?[0-9]+" formControlName="E" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " (change)="updateVarsInitials(3,ee_value.value)"  #ee_value />
+          <input type="number" min="0" pattern="[+-]?([0-9]*[.])?[0-9]+" formControlName="E" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " (change)="updateVarsInitials(2,ee_value.value)"  #ee_value />
         </p>
       </li>
 
@@ -96,10 +92,13 @@
           <br>
           <input type="number" pattern="[+]?([0-9]*[.])?[0-9]+" min="1" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " formControlName="t" />
         </p>
+        <p class="left">
+          <label><b>Población total</b></label><br>
+          <input type="number" min="0" pattern="[+-]?([0-9]*[.])?[0-9]+" formControlName="P" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) "  #s_value />
+        </p>
         <p>
-          <label><b>Valor de N (adimensionalizar)</b></label>
-          <br>
-          <input type="number" pattern="[+]?([0-9]*[.])?[0-9]+" min="1"  onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode === 46) " formControlName="N"/>
+          <label><b>Adimensionalizar</b></label><br>
+          <mat-checkbox color="primary" (click)="dimen= !dimen"  #m_est></mat-checkbox>
         </p>
       </li>
   </form>
