@@ -9,6 +9,8 @@
   </div>
 
   <div class="container box">
+    <h3><b>Evaluación de la función objetivo :</b></h3>
+    <p>{{results.fun}}</p>
     <h3><b>Parámetros óptimos:</b></h3>
     <div *ngIf="numeric_solve.model_name=='SI'">
       <p *ngIf="numeric_solve.params_est[0]"><b>&beta; : </b> {{results.opt[0]}}</p>
