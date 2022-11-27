@@ -1,5 +1,5 @@
 p{
-  margin-top: 10px;
+  margin-top: 100px;
 }
 
 button{
@@ -47,19 +47,54 @@ width: 400px;
 }
 
 .center{
-  text-align: center;
-  color:blue;
-  margin-top: 100px;
-}
-
-.big{
   font-size: 50px;
+  text-align: center;
+  color:white;
+  margin-top: 100px;
+  -webkit-animation-duration: 3s;
+          animation-duration: 3s;
+  -webkit-animation-name: jump;
+          animation-name: jump;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
 }
 
-.small{
-  font-size: 30px;
+
+.presentation{
+  background-image: url(../../../assets/img/p.png);
+  width: 35.7cm;
+  height: 15cm;
+  margin-top: -2.65cm;
 }
 
-b{
-  margin-top: 10px;
+
+
+@-webkit-keyframes jump {
+  0% {
+    -webkit-transform: translateY(3px);
+            transform: translateY(3px);
+  }
+  50% {
+    -webkit-transform: translateY(-15px);
+            transform: translateY(-15px);
+  }
+  100% {
+    -webkit-transform: translateY(3px);
+            transform: translateY(3px);
+  }
+}
+
+@keyframes jump {
+  0% {
+    -webkit-transform: translateY(3px);
+            transform: translateY(3px);
+  }
+  50% {
+    -webkit-transform: translateY(-15px);
+            transform: translateY(-15px);
+  }
+  100% {
+    -webkit-transform: translateY(3px);
+            transform: translateY(3px);
+  }
 }

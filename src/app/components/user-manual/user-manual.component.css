@@ -43,19 +43,7 @@ button{
     display: inline-flex;
     margin-left: 80px;
     margin-right: 80px;
-}
-
-.button-center{
-  margin-left: 290px;
-}
-
-.button-center3{
-  margin-left: 500px;
-  margin-bottom: 15px;
-}
-
-.button-center2{
-  margin-right: 150px;
+    margin-bottom: 50px;
 }
 
 
